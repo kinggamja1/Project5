@@ -14,6 +14,15 @@
 #define MAP_WIDTH	60
 #define MAP_HEIGHT	18
 
+//지형, 객체 매크로
+#define TERRAIN_BASE 'B'
+#define TERRAIN_HARVESTER 'H'
+#define TERRAIN_SPICE '5'
+#define TERRAIN_PLATE 'P'
+#define TERRAIN_ROCK 'R'
+#define TERRAIN_SANDWORM 'W'
+
+
 
 /* ================= 위치와 방향 =================== */
 // 맵에서 위치를 나타내는 구조체
