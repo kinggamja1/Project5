@@ -20,6 +20,14 @@ typedef struct {
 	bool is_selected;      
 } CURSOR_STATE;
 
+//»÷µå¿ú ±¸Á¶Ã¼
+typedef struct {
+	POSITION pos;          
+	int length;           
+	int growth_rate;     
+	int speed;            
+} SANDWORM;
+
 
 //ÁöÇü, °´Ã¼ ¸ÅÅ©·Î
 #define TERRAIN_BASE 'B'

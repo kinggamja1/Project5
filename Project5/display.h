@@ -28,7 +28,7 @@ void display(
 	char map[N_LAYER][MAP_HEIGHT][MAP_WIDTH],
 	CURSOR cursor
 );
-void display_status_window(void);
+void display_status_window(POSITION selected_position);
 void display_system_message(void);
 void display_commands(void);
 
