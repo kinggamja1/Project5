@@ -87,6 +87,12 @@ int main(void) {
 					display_status_window(selected_position);
 				}
 				break;
+			case 'X':
+				if (system_state.production_time_left > 0) {
+					system_state.production_time_left = 0;
+					snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "Production cancelled");
+				}
+				break;
 			case 27: 
 				selected_position.row = -1;
 				selected_position.column = -1;
