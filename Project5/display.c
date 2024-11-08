@@ -133,5 +133,8 @@ void display_system_message(void) {
 void display_commands(void) {
 	set_color(COLOR_DEFAULT);
 	gotoxy(command_window_pos);
-	printf("명령창: 내릴 수 있는 명령을 표시");
+	printf("명령창: \n");
+	printf("H: Harvester 생산, M: 이동, P: Plate 건설\n");
+	printf("F: Fremen 생산, S: Soldier 생산\n");
+	printf("T: Heavy Tank 생산, G: Fighter 생산\n");
 }
