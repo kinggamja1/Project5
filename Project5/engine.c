@@ -56,7 +56,25 @@ int main(void) {
 		else {
 			// 방향키 외의 입력
 			switch (key) {
-			case k_quit: outro();
+			case 'H':
+				printf("Harvester를 생산합니다.\n");
+				break;
+			case 'P':
+				printf("Plate를 건설합니다.\n");
+				break;
+			case 'F':
+				printf("Fremen을 생산합니다.\n");
+				break;
+			case 'S':
+				printf("Soldier를 생산합니다.\n");
+				break;
+			case 'T':
+				printf("Heavy Tank를 생산합니다.\n");
+				break;
+			case 'G':
+				printf("Fighter를 생산합니다.\n");
+				break;
+			case k_quit: outro(); break;
 			case k_none:
 			case k_undef:
 			default: break;
