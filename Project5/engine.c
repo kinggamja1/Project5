@@ -1,4 +1,5 @@
-//건물, 지형 배치
+//건물, 지형 배치 129 ~ 140
+//단축키 입력 처리 60 ~ 77
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
@@ -56,6 +57,19 @@ int main(void) {
 		else {
 			// 방향키 외의 입력
 			switch (key) {
+			case ' ':
+				if (map[0][cursor.current.row][cursor.current.column] != ' ') {
+					selected_position = cursor.current;
+					printf("지형 또는 오브젝트 선택됨: (%d, %d)\n", selected_position.row, selected_position.column);
+					display_status_window(selected_position);
+				}
+				break;
+			case 27: 
+				selected_position.row = -1;
+				selected_position.column = -1;
+				display_status_window(selected_position);
+				printf("선택 취소됨\n");
+				break;
 			case 'H':
 				printf("Harvester를 생산합니다.\n");
 				break;
