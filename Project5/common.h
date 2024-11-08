@@ -32,6 +32,11 @@ typedef struct {
 	int speed;            
 } SANDWORM;
 
+//시스템 상태 저장 하기 위한 구조체 
+typedef struct {
+	char message[SYSTEM_MESSAGE_LENGTH];
+	int production_time_left; 
+} SYSTEM_STATE;
 
 //지형, 객체 매크로
 #define TERRAIN_BASE 'B'
