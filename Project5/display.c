@@ -71,12 +71,41 @@ void display_map(char map[N_LAYER][MAP_HEIGHT][MAP_WIDTH]) {
 		for (int j = 0; j < MAP_WIDTH; j++) {
 			if (frontbuf[i][j] != backbuf[i][j]) {
 				POSITION pos = { i, j };
+				char ch = backbuf[i][j];
 				printc(padd(map_pos, pos), backbuf[i][j], COLOR_DEFAULT);
+
+				switch (ch) {
+				case 'B': 
+					set_color(COLOR_BLUE); 
+					break;
+				case 'H':
+					set_color(COLOR_RED);   
+					break;
+				case '5':
+					set_color(COLOR_YELLOW); 
+					break;
+				case 'P': 
+					set_color(COLOR_BLACK); 
+					break;
+				case 'R': 
+					set_color(COLOR_GRAY);   
+					break;
+				case 'W': 
+					set_color(COLOR_ORANGE); 
+					break;
+				default:
+					set_color(COLOR_DEFAULT);
+					break;
+				}
+
+				printc(padd(map_pos, pos), ch, -1);
 			}
 			frontbuf[i][j] = backbuf[i][j];
+			}
+			
 		}
 	}
-}
+
 
 // frontbuf[][]에서 커서 위치의 문자를 색만 바꿔서 그대로 다시 출력
 void display_cursor(CURSOR cursor) {
