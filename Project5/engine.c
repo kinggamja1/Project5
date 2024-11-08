@@ -106,6 +106,20 @@ void init(void) {
 		}
 	}
 
+	
+	map[0][1][1] = 'B';
+	map[0][2][2] = 'H';
+	map[0][3][3] = '5';
+	map[0][1][3] = 'P';
+	map[0][2][3] = 'P';
+	map[0][1][4] = 'P';
+	map[0][2][4] = 'P';
+	map[0][5][5] = 'R';
+	map[0][7][7] = 'R';
+	map[0][9][9] = 'R';
+	map[0][4][4] = 'W';
+	map[0][6][6] = 'W';
+
 	// object sample
 	map[1][obj.pos.row][obj.pos.column] = 'o';
 }
