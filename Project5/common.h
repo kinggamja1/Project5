@@ -1,4 +1,5 @@
-#pragma on#ifndef _COMMON_H_
+#pragma on
+#ifndef _COMMON_H_
 #define _COMMON_H_
 
 #include <stdio.h>
@@ -13,6 +14,12 @@
 #define N_LAYER 2
 #define MAP_WIDTH	60
 #define MAP_HEIGHT	18
+//커서 및 선택 상태
+typedef struct {
+	POSITION pos;          
+	bool is_selected;      
+} CURSOR_STATE;
+
 
 //지형, 객체 매크로
 #define TERRAIN_BASE 'B'
