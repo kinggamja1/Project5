@@ -122,6 +122,35 @@ void display_status_window(void) {
 	set_color(COLOR_DEFAULT);
 	gotoxy(status_window_pos);
 	printf("상태창: 선택된 유닛/지형 정보 및 상태");
+	if (selected_position.row == -1) {
+		printf("상태창: 선택된 항목 없음");
+	}
+	else {
+		char selected_char = map[0][selected_position.row][selected_position.column];
+		switch (selected_char) {
+		case 'B':
+			printf("상태창: 본진 (Base)");
+			break;
+		case 'H':
+			printf("상태창: 하베스터 (Harvester)");
+			break;
+		case '5':
+			printf("상태창: 스파이스 매장지");
+			break;
+		case 'P':
+			printf("상태창: 장판 (Plate)");
+			break;
+		case 'R':
+			printf("상태창: 바위 (Rock)");
+			break;
+		case 'W':
+			printf("상태창: 샌드웜 (Sandworm)");
+			break;
+		default:
+			printf("상태창: 빈 지형");
+			break;
+		}
+	}
 }
 
 void display_system_message(void) {
