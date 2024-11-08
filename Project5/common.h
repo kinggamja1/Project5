@@ -38,6 +38,7 @@ typedef struct {
 	int production_time_left; 
 } SYSTEM_STATE;
 
+extern SYSTEM_STATE system_state;
 //지형, 객체 매크로
 #define TERRAIN_BASE 'B'
 #define TERRAIN_HARVESTER 'H'

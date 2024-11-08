@@ -14,6 +14,26 @@ void cursor_move(DIRECTION dir);
 void sample_obj_move(void);
 POSITION sample_obj_next_position(void);
 
+SYSTEM_STATE system_state = { "", 0 };
+//À¯´Ö »ý»ê
+void produce_unit(char unit_type) {
+	if (selected_position.row != -1 && map[0][selected_position.row][selected_position.column] == 'B') {
+		if (unit_type == 'H') {
+			if (resource.spice >= UNIT_HARVESTER_COST) {
+				resource.spice -= UNIT_HARVESTER_COST;
+				system_state.production_time_left = 3000; 
+				snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "Producing Harvester...");
+			}
+			else {
+				snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "Not enough spice");
+			}
+		}
+	}
+	else {
+		snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "Invalid selection");
+	}
+}
+
 
 /* ================= control =================== */
 int sys_clock = 0;		// system-wide clock(ms)
