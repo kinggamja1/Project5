@@ -233,3 +233,49 @@ void sample_obj_move(void) {
 
 	obj.next_move_time = sys_clock + obj.speed;
 }
+//샌드웜 이동 - 가장 가까운 유닛 탐색 -> 해당 방향으로 이동, 잡아먹으면 커지고 가끔 매장지 생성
+void sandworm_move(void) {
+	if (sys_clock % sandworm.speed != 0) {
+		return; 
+	}
+	POSITION closest_unit = { -1, -1 };
+	int min_distance = MAP_HEIGHT * MAP_WIDTH;
+
+	for (int i = 0; i < MAP_HEIGHT; i++) {
+		for (int j = 0; j < MAP_WIDTH; j++) {
+			if (map[1][i][j] == 'H' || map[1][i][j] == 'F' || map[1][i][j] == 'S' || map[1][i][j] == 'T' || map[1][i][j] == 'G') {
+				int distance = abs(sandworm.pos.row - i) + abs(sandworm.pos.column - j);
+				if (distance < min_distance) {
+					min_distance = distance;
+					closest_unit.row = i;
+					closest_unit.column = j;
+				}
+			}
+		}
+	}
+	if (closest_unit.row != -1 && closest_unit.column != -1) {
+		if (sandworm.pos.row < closest_unit.row) {
+			sandworm.pos.row++;
+		}
+		else if (sandworm.pos.row > closest_unit.row) {
+			sandworm.pos.row--;
+		}
+
+		if (sandworm.pos.column < closest_unit.column) {
+			sandworm.pos.column++;
+		}
+		else if (sandworm.pos.column > closest_unit.column) {
+			sandworm.pos.column--;
+		}
+
+		if (sandworm.pos.row == closest_unit.row && sandworm.pos.column == closest_unit.column) {
+			map[1][closest_unit.row][closest_unit.column] = -1;
+			sandworm.length += sandworm.growth_rate;
+
+			if (rand() % 5 == 0) {
+				map[0][closest_unit.row][closest_unit.column] = '5';
+				printf("스파이스 매장지가 생성되었습니다.\n");
+			}
+		}
+	}
+}
