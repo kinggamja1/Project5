@@ -1,3 +1,4 @@
+//건물, 지형 배치
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
