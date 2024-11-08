@@ -18,6 +18,7 @@ POSITION sample_obj_next_position(void);
 /* ================= control =================== */
 int sys_clock = 0;		// system-wide clock(ms)
 CURSOR cursor = { { 1, 1 }, {1, 1} };
+POSITION selected_position = { -1, -1 };
 
 
 /* ================= game data =================== */
@@ -37,6 +38,8 @@ OBJECT_SAMPLE obj = {
 	.speed = 300,
 	.next_move_time = 300
 };
+
+SANDWORM sandworm = { {10, 10}, 1, 1, 500 };
 
 /* ================= main() =================== */
 int main(void) {
