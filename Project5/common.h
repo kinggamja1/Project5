@@ -92,4 +92,3 @@ typedef struct {
 } OBJECT_SAMPLE;
 
 #endif
-ce

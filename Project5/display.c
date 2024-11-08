@@ -12,6 +12,10 @@
 const POSITION resource_pos = { 0, 0 };
 const POSITION map_pos = { 1, 0 };
 
+const POSITION status_window_pos = { MAP_HEIGHT + 2, 0 };
+const POSITION system_message_pos = { MAP_HEIGHT + 8, 0 };
+const POSITION command_window_pos = { MAP_HEIGHT + 10, 0 };
+
 
 char backbuf[MAP_HEIGHT][MAP_WIDTH] = { 0 };
 char frontbuf[MAP_HEIGHT][MAP_WIDTH] = { 0 };
@@ -20,6 +24,9 @@ void project(char src[N_LAYER][MAP_HEIGHT][MAP_WIDTH], char dest[MAP_HEIGHT][MAP
 void display_resource(RESOURCE resource);
 void display_map(char map[N_LAYER][MAP_HEIGHT][MAP_WIDTH]);
 void display_cursor(CURSOR cursor);
+void display_status_window(void);
+void display_system_message(void);
+void display_commands(void);
 
 
 void display(
@@ -30,10 +37,9 @@ void display(
 	display_resource(resource);
 	display_map(map);
 	display_cursor(cursor);
-	// display_system_message()
-	// display_object_info()
-	// display_commands()
-	// ...
+	display_status_window();
+	display_system_message();
+	display_commands();
 }
 
 void display_resource(RESOURCE resource) {
