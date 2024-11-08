@@ -14,6 +14,8 @@
 #define N_LAYER 2
 #define MAP_WIDTH	60
 #define MAP_HEIGHT	18
+//시스템 메세지 길이 설정
+#define SYSTEM_MESSAGE_LENGTH 100
 //커서 및 선택 상태
 typedef struct {
 	POSITION pos;          
