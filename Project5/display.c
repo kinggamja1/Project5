@@ -28,6 +28,7 @@ void display_status_window(void);
 void display_system_message(void);
 void display_commands(void);
 
+extern SYSTEM_STATE system_state;
 
 void display(
 	RESOURCE resource,
@@ -161,7 +162,7 @@ void display_status_window(void) {
 void display_system_message(void) {
 	set_color(COLOR_DEFAULT);
 	gotoxy(system_message_pos);
-	printf("시스템 메시지: 여기에 시스템 메시지를 출력");
+	printf("시스템 메시지: %s", system_state.message);
 }
 
 void display_commands(void) {

@@ -24,6 +24,13 @@ typedef struct {
 	bool is_selected;      
 } CURSOR_STATE;
 
+//시스템 메세지 관리 구조체
+typedef struct {
+	char messages[MAX_SYSTEM_MESSAGES][SYSTEM_MESSAGE_LENGTH]; 
+	int message_count; 
+} SYSTEM_MESSAGE_LOG;
+
+
 //샌드웜 구조체
 typedef struct {
 	POSITION pos;          
