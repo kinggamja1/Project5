@@ -179,3 +179,16 @@ void display_commands(void) {
 	printf("F: Fremen 생산, S: Soldier 생산\n");
 	printf("T: Heavy Tank 생산, G: Fighter 생산\n");
 }
+
+void add_system_message(const char* message) {
+	if (system_message_log.message_count >= MAX_SYSTEM_MESSAGES) {
+		for (int i = 1; i < MAX_SYSTEM_MESSAGES; i++) {
+			strcpy(system_message_log.messages[i - 1], system_message_log.messages[i]);
+		}
+		system_message_log.message_count--;
+	}
+
+	strncpy(system_message_log.messages[system_message_log.message_count], message, SYSTEM_MESSAGE_LENGTH - 1);
+	system_message_log.messages[system_message_log.message_count][SYSTEM_MESSAGE_LENGTH - 1] = '\0'; // 문자열 종료 보장
+	system_message_log.message_count++;
+}
