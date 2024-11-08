@@ -13,6 +13,7 @@ void outro(void);
 void cursor_move(DIRECTION dir);
 void sample_obj_move(void);
 POSITION sample_obj_next_position(void);
+void produce_unit_or_building(char type);
 
 SYSTEM_STATE system_state = { "", 0 };
 //유닛 생산
@@ -60,6 +61,8 @@ OBJECT_SAMPLE obj = {
 };
 
 SANDWORM sandworm = { {10, 10}, 1, 1, 500 };
+
+SYSTEM_MESSAGE_LOG system_message_log = { .message_count = 0 };
 
 /* ================= main() =================== */
 int main(void) {
@@ -311,5 +314,52 @@ void sandworm_move(void) {
 				printf("스파이스 매장지가 생성되었습니다.\n");
 			}
 		}
+	}
+}
+void produce_unit_or_building(char type) {
+	if (selected_position.row != -1) {
+		switch (map[0][selected_position.row][selected_position.column]) {
+		case 'B': 
+			if (type == 'H' && resource.spice >= 50) { 
+				resource.spice -= 50;
+				add_system_message("Harvester 생산 시작!");
+			}
+			else if (type == 'S' && resource.spice >= 75) {
+				resource.spice -= 75;
+				add_system_message("Soldier 생산 시작!");
+			}
+			else {
+				add_system_message("자원이 부족하거나 잘못된 명령입니다.");
+			}
+			break;
+		case 'R': 
+			if (type == 'F' && resource.spice >= 100) {
+				resource.spice -= 100;
+				add_system_message("Fremen 생산 시작!");
+			}
+			else {
+				add_system_message("자원이 부족하거나 잘못된 명령입니다.");
+			}
+			break;
+		case 'F': 
+			if (type == 'T' && resource.spice >= 150) { 
+				resource.spice -= 150;
+				add_system_message("Heavy Tank 생산 시작!");
+			}
+			else if (type == 'G' && resource.spice >= 125) { 
+				resource.spice -= 125;
+				add_system_message("Fighter 생산 시작!");
+			}
+			else {
+				add_system_message("자원이 부족하거나 잘못된 명령입니다.");
+			}
+			break;
+		default:
+			add_system_message("해당 건물에서는 이 명령을 수행할 수 없습니다.");
+			break;
+		}
+	}
+	else {
+		add_system_message("먼저 건물을 선택하십시오.");
 	}
 }
