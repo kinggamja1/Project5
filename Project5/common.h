@@ -14,6 +14,7 @@
 #define N_LAYER 2
 #define MAP_WIDTH	60
 #define MAP_HEIGHT	18
+#define MAX_SYSTEM_MESSAGES 10
 //유닛 생산 관련 상수
 #define UNIT_HARVESTER_COST 50
 //시스템 메세지 길이 설정
@@ -29,6 +30,8 @@ typedef struct {
 	char messages[MAX_SYSTEM_MESSAGES][SYSTEM_MESSAGE_LENGTH]; 
 	int message_count; 
 } SYSTEM_MESSAGE_LOG;
+
+extern SYSTEM_MESSAGE_LOG system_message_log;
 
 
 //샌드웜 구조체

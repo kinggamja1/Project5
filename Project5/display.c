@@ -8,6 +8,7 @@
 #include "display.h"
 #include "io.h"
 
+extern SYSTEM_MESSAGE_LOG system_message_log;
 // 출력할 내용들의 좌상단(topleft) 좌표
 const POSITION resource_pos = { 0, 0 };
 const POSITION map_pos = { 1, 0 };
@@ -163,6 +164,11 @@ void display_system_message(void) {
 	set_color(COLOR_DEFAULT);
 	gotoxy(system_message_pos);
 	printf("시스템 메시지: %s", system_state.message);
+
+	for (int i = 0; i < system_message_log.message_count; i++) {
+		gotoxy((POSITION) { system_message_pos.row + i + 1, system_message_pos.column });
+		printf("%s\n", system_message_log.messages[i]);
+	}
 }
 
 void display_commands(void) {
