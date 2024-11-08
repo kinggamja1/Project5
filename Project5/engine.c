@@ -101,6 +101,8 @@ int main(void) {
 		// 샘플 오브젝트 동작
 		sample_obj_move();
 
+		sandworm_move();
+
 		// 화면 출력
 		display(resource, map, cursor);
 		Sleep(TICK);
