@@ -22,6 +22,22 @@
 #define TERRAIN_ROCK 'R'
 #define TERRAIN_SANDWORM 'W'
 
+//건물 지정
+#define BUILDING_BASE 'B'
+#define BUILDING_PLATE 'P'
+#define BUILDING_DORMITORY 'D'
+#define BUILDING_GARAGE 'G'
+#define BUILDING_BARRACKS 'R'
+#define BUILDING_SHELTER 'S'
+#define BUILDING_ARENA 'A'
+#define BUILDING_FACTORY 'F
+
+//유닛 지정
+#define UNIT_HARVESTER 'H'
+#define UNIT_FREMEN 'F'
+#define UNIT_SOLDIER 'S'
+#define UNIT_FIGHTER 'G'
+#define UNIT_HEAVY_TANK 'T'
 
 
 /* ================= 위치와 방향 =================== */
