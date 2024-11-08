@@ -124,6 +124,14 @@ int main(void) {
 			}
 		}
 
+		if (system_state.production_time_left > 0) {
+			system_state.production_time_left -= TICK;
+			if (system_state.production_time_left <= 0) {
+				map[1][selected_position.row][selected_position.column + 1] = 'H'; 
+				snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "A new Harvester ready!");
+			}
+		}
+
 		// 샘플 오브젝트 동작
 		sample_obj_move();
 
