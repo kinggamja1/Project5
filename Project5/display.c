@@ -89,3 +89,20 @@ void display_cursor(CURSOR cursor) {
 	ch = frontbuf[curr.row][curr.column];
 	printc(padd(map_pos, curr), ch, COLOR_CURSOR);
 }
+void display_status_window(void) {
+	set_color(COLOR_DEFAULT);
+	gotoxy(status_window_pos);
+	printf("상태창: 선택된 유닛/지형 정보 및 상태");
+}
+
+void display_system_message(void) {
+	set_color(COLOR_DEFAULT);
+	gotoxy(system_message_pos);
+	printf("시스템 메시지: 여기에 시스템 메시지를 출력");
+}
+
+void display_commands(void) {
+	set_color(COLOR_DEFAULT);
+	gotoxy(command_window_pos);
+	printf("명령창: 내릴 수 있는 명령을 표시");
+}
