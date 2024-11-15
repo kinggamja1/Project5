@@ -1,11 +1,15 @@
-//건물, 지형 배치 129 ~ 140
-//단축키 입력 처리 60 ~ 77
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
 #include "common.h"
 #include "io.h"
 #include "display.h"
+
+extern char map[N_LAYER][MAP_HEIGHT][MAP_WIDTH];
+extern RESOURCE resource;
+extern POSITION selected_position;
+extern SYSTEM_MESSAGE_LOG system_message_log;
+extern SANDWORM sandworm;
 
 void init(void);
 void intro(void);
@@ -14,26 +18,11 @@ void cursor_move(DIRECTION dir);
 void sample_obj_move(void);
 POSITION sample_obj_next_position(void);
 void produce_unit_or_building(char type);
+void sandworm_move(void);
+void add_system_message(const char* message);
 
 SYSTEM_STATE system_state = { "", 0 };
-//유닛 생산
-void produce_unit(char unit_type) {
-	if (selected_position.row != -1 && map[0][selected_position.row][selected_position.column] == 'B') {
-		if (unit_type == 'H') {
-			if (resource.spice >= UNIT_HARVESTER_COST) {
-				resource.spice -= UNIT_HARVESTER_COST;
-				system_state.production_time_left = 3000; 
-				snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "Producing Harvester...");
-			}
-			else {
-				snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "Not enough spice");
-			}
-		}
-	}
-	else {
-		snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "Invalid selection");
-	}
-}
+
 
 
 /* ================= control =================== */
@@ -71,11 +60,23 @@ int main(void) {
 	init();
 	intro();
 	display(resource, map, cursor);
+	int clear_screen_interval = 1000; // 1초마다 화면을 지우는 간격
+	int last_clear_time = 0;
+
+	
 
 	while (1) {
 		// loop 돌 때마다(즉, TICK==10ms마다) 키 입력 확인
 		KEY key = get_key();
-
+		
+		if (key != k_none) {
+			printf("key pressed: %d\n", key);
+			display(resource, map, cursor);
+		}
+		else {
+			Sleep(TICK);
+			continue;
+		}
 		// 키 입력이 있으면 처리
 		if (is_arrow_key(key)) {
 			cursor_move(ktod(key));
@@ -104,6 +105,8 @@ int main(void) {
 				break;
 			case 'H':
 				printf("Harvester를 생산합니다.\n");
+				produce_unit_or_building('H'); 
+				display_system_message(); 
 				break;
 			case 'P':
 				printf("Plate를 건설합니다.\n");
@@ -120,18 +123,31 @@ int main(void) {
 			case 'G':
 				printf("Fighter를 생산합니다.\n");
 				break;
-			case k_quit: outro(); break;
+			case k_quit: 
+				outro(); 
+				break;
 			case k_none:
 			case k_undef:
 			default: break;
 			}
 		}
+		if (sys_clock - last_clear_time >= clear_screen_interval) {
+			system("cls");
+			last_clear_time = sys_clock;
+		}
+
 
 		if (system_state.production_time_left > 0) {
 			system_state.production_time_left -= TICK;
 			if (system_state.production_time_left <= 0) {
-				map[1][selected_position.row][selected_position.column + 1] = 'H'; 
-				snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "A new Harvester ready!");
+				if (selected_position.row >= 0 && selected_position.row < MAP_HEIGHT &&
+					selected_position.column >= 0 && selected_position.column + 1 < MAP_WIDTH) {
+					map[1][selected_position.row][selected_position.column + 1] = 'H';
+					snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "A new Harvester ready!");
+				}
+				else {
+					snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "Cannot place Harvester outside of map boundaries");
+				}
 			}
 		}
 
@@ -140,10 +156,13 @@ int main(void) {
 
 		sandworm_move();
 
+		
 		// 화면 출력
 		display(resource, map, cursor);
 		Sleep(TICK);
-		sys_clock += 10;
+		sys_clock += TICK;
+
+		
 	}
 }
 
@@ -361,5 +380,23 @@ void produce_unit_or_building(char type) {
 	}
 	else {
 		add_system_message("먼저 건물을 선택하십시오.");
+	}
+}
+//유닛 생산
+void produce_unit(char unit_type) {
+	if (selected_position.row != -1 && map[0][selected_position.row][selected_position.column] == 'B') {
+		if (unit_type == 'H') {
+			if (resource.spice >= UNIT_HARVESTER_COST) {
+				resource.spice -= UNIT_HARVESTER_COST;
+				system_state.production_time_left = 3000;
+				snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "Producing Harvester...");
+			}
+			else {
+				snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "Not enough spice");
+			}
+		}
+	}
+	else {
+		snprintf(system_state.message, SYSTEM_MESSAGE_LENGTH, "Invalid selection");
 	}
 }

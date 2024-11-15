@@ -1,4 +1,4 @@
-#pragma on
+#pragma once
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
@@ -9,7 +9,7 @@
 #include <assert.h>
 
 /* ================= system parameters =================== */
-#define TICK 10		// time unit(ms)
+#define TICK 10// time unit(ms)
 
 #define N_LAYER 2
 #define MAP_WIDTH	60
@@ -19,11 +19,21 @@
 #define UNIT_HARVESTER_COST 50
 //시스템 메세지 길이 설정
 #define SYSTEM_MESSAGE_LENGTH 100
+
+
+
+/* ================= 위치와 방향 =================== */
+// 맵에서 위치를 나타내는 구조체
+typedef struct {
+	int row, column;
+} POSITION;
+
 //커서 및 선택 상태
 typedef struct {
 	POSITION pos;          
 	bool is_selected;      
 } CURSOR_STATE;
+
 
 //시스템 메세지 관리 구조체
 typedef struct {
@@ -65,7 +75,7 @@ extern SYSTEM_STATE system_state;
 #define BUILDING_BARRACKS 'R'
 #define BUILDING_SHELTER 'S'
 #define BUILDING_ARENA 'A'
-#define BUILDING_FACTORY 'F
+#define BUILDING_FACTORY 'F'
 
 //유닛 지정
 #define UNIT_HARVESTER 'H'
@@ -73,13 +83,6 @@ extern SYSTEM_STATE system_state;
 #define UNIT_SOLDIER 'S'
 #define UNIT_FIGHTER 'G'
 #define UNIT_HEAVY_TANK 'T'
-
-
-/* ================= 위치와 방향 =================== */
-// 맵에서 위치를 나타내는 구조체
-typedef struct {
-	int row, column;
-} POSITION;
 
 // 커서 위치
 typedef struct {
@@ -149,6 +152,7 @@ typedef struct {
 	char repr;			// 화면에 표시할 문자(representation)
 	int move_period;	// '몇 ms마다 한 칸 움직이는지'를 뜻함
 	int next_move_time;	// 다음에 움직일 시간
+	int speed;
 } OBJECT_SAMPLE;
 
 #endif

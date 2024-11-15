@@ -8,7 +8,11 @@
 #include "display.h"
 #include "io.h"
 
+extern SYSTEM_STATE system_state;
 extern SYSTEM_MESSAGE_LOG system_message_log;
+extern POSITION selected_position;
+extern SANDWORM sandworm;
+extern char map[N_LAYER][MAP_HEIGHT][MAP_WIDTH];
 // 출력할 내용들의 좌상단(topleft) 좌표
 const POSITION resource_pos = { 0, 0 };
 const POSITION map_pos = { 1, 0 };
@@ -25,21 +29,24 @@ void project(char src[N_LAYER][MAP_HEIGHT][MAP_WIDTH], char dest[MAP_HEIGHT][MAP
 void display_resource(RESOURCE resource);
 void display_map(char map[N_LAYER][MAP_HEIGHT][MAP_WIDTH]);
 void display_cursor(CURSOR cursor);
-void display_status_window(void);
+void display_status_window(POSITION selected_position);
 void display_system_message(void);
 void display_commands(void);
 
-extern SYSTEM_STATE system_state;
+
 
 void display(
 	RESOURCE resource,
 	char map[N_LAYER][MAP_HEIGHT][MAP_WIDTH],
-	CURSOR cursor)
-{
+	CURSOR cursor){
+	system("cls");
+	
+
+
 	display_resource(resource);
 	display_map(map);
 	display_cursor(cursor);
-	display_status_window();
+	display_status_window(selected_position);
 	display_system_message();
 	display_commands();
 }
@@ -74,10 +81,10 @@ void display_map(char map[N_LAYER][MAP_HEIGHT][MAP_WIDTH]) {
 			if (frontbuf[i][j] != backbuf[i][j]) {
 				POSITION pos = { i, j };
 				char ch = backbuf[i][j];
-				printc(padd(map_pos, pos), backbuf[i][j], COLOR_DEFAULT);
+				
 
 				if (i == sandworm.pos.row && j == sandworm.pos.column) {
-					ch = 'W'; // 샌드웜의 기호
+					ch = 'W'; 
 					set_color(COLOR_ORANGE);
 				}
 				else {
@@ -105,8 +112,9 @@ void display_map(char map[N_LAYER][MAP_HEIGHT][MAP_WIDTH]) {
 						break;
 					}
 
-					printc(padd(map_pos, pos), ch, -1);
+					
 				}
+				printc(padd(map_pos, pos), ch, -1);
 				frontbuf[i][j] = backbuf[i][j];
 			}
 
@@ -125,7 +133,7 @@ void display_cursor(CURSOR cursor) {
 	ch = frontbuf[curr.row][curr.column];
 	printc(padd(map_pos, curr), ch, COLOR_CURSOR);
 }
-void display_status_window(void) {
+void display_status_window(POSITION selected_position) {
 	set_color(COLOR_DEFAULT);
 	gotoxy(status_window_pos);
 	printf("상태창: 선택된 유닛/지형 정보 및 상태");
@@ -189,6 +197,6 @@ void add_system_message(const char* message) {
 	}
 
 	strncpy(system_message_log.messages[system_message_log.message_count], message, SYSTEM_MESSAGE_LENGTH - 1);
-	system_message_log.messages[system_message_log.message_count][SYSTEM_MESSAGE_LENGTH - 1] = '\0'; // 문자열 종료 보장
+	system_message_log.messages[system_message_log.message_count][SYSTEM_MESSAGE_LENGTH - 1] = '\0'; 
 	system_message_log.message_count++;
 }
